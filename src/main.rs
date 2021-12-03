@@ -60,8 +60,8 @@ impl Pitcher {
         self.record_array.iter().map(|r|r.get(2).unwrap().to_string()).collect::<Vec<_>>()
     }
 
-    pub fn league(&self) -> Vec<i32> {
-        self.record_array.iter().map(|r|r.get(3).unwrap().to_string()).collect::<Vec<_>>()
+    pub fn league(&self) -> Vec<String> {
+        self.record_array.iter().map(|r| r.get(3).unwrap().to_string()).collect::<Vec<_>>()
     }
 
     pub fn wins(&self) -> Vec<i32> {
@@ -69,12 +69,12 @@ impl Pitcher {
     }
 
     pub fn losses(&self) -> Vec<i32> {
-        self.record_array.iter().map(|r|r.get(5).unwrap().parse().ok()).collect::<Vec<_>>()
+        self.record_array.iter().map(|r| r.get(5).unwrap().parse().unwrap()).collect::<Vec<_>>()
     }
 
-    pub fn win_rate(&self) -> Vec<Option<i32>> {
+    pub fn win_rate(&self) -> Vec<Option<String>> {
         self.record_array.iter()
-            .map(|r| r.get(6).unwrap().map(|s| s.parse()))
+            .map(|r| r.get(6).map(|s| s.to_string()))
             .collect::<Vec<_>>()
     }
 }
@@ -82,6 +82,7 @@ impl Pitcher {
 fn main() {
     let pitcher = make_pitcher();
     println!("{:?}", pitcher.year());
+    println!("{:?}", pitcher.win_rate());
     ()
 }
 

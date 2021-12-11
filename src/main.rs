@@ -99,7 +99,7 @@ fn main() {
 
 
 fn make_pitcher() -> Pitcher {
-    let records = read_csv(Path::new("/home/ykanya/devel/tools/baseball/work/baseball_R/data/spahn.csv")).unwrap();
+    let records = read_csv(Path::new("../work/baseball_R/data/spahn.csv")).unwrap();
     Pitcher{
         record_array: records
             .iter()

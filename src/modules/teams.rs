@@ -10,7 +10,7 @@ struct TeamTable {
 
 fn make_team_table() -> TeamTable {
     let records =
-        read_csv(Path::new("/home/ykanya/devel/tools/baseball/work/baseballdatabank-master/core/Teams.csv")).unwrap();
+        read_csv(Path::new("../work/baseballdatabank-master/core/Teams.csv")).unwrap();
     TeamTable {
         record_array: records
             .iter()
@@ -26,7 +26,7 @@ pub fn process_teams() {
     let teamsScores =
         teamColumns
             .iter()
-            .filter(|line| (*line).get(0).unwrap().parse::<i32>().unwrap() > 2000)
+            .filter(|&line| line.get(0).unwrap().parse::<i32>().unwrap() > 2000)
             .collect::<Vec<_>>();
     println!("{:?}", teamsScores);
     ()

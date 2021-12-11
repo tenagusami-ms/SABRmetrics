@@ -1,7 +1,10 @@
-use std::error::Error;
-use std::fs::File;
-use csv::StringRecord;
 use serde::Deserialize;
+use std::path::Path;
+
+mod modules;
+
+use modules::csv::read_csv;
+use modules::teams::process_teams;
 
 #[derive(Debug, Deserialize)]
 pub struct Pitcher {
@@ -77,25 +80,26 @@ impl Pitcher {
             .map(|r| r.get(6).map(|s| s.to_string()))
             .collect::<Vec<_>>()
     }
+
+    pub fn earned_run_average(&self) -> Vec<f64> {
+        self.record_array.iter()
+            .map(|r| r.get(7).unwrap().parse().unwrap())
+            .collect::<Vec<_>>()
+    }
 }
 
 fn main() {
     let pitcher = make_pitcher();
     println!("{:?}", pitcher.year());
-    println!("{:?}", pitcher.win_rate());
-    ()
-}
+    println!("{:?}", pitcher.earned_run_average());
 
-fn read_csv() -> Result<Vec<StringRecord>, Box<dyn Error>> {
-    let file = File::open("/home/ykanya/devel/tools/baseball/baseball_R/data/spahn.csv")?;
-    // Build the CSV reader and iterate over each record.
-    let mut rdr = csv::Reader::from_reader(file);
-    Ok(rdr.records().map(|r| r.unwrap()).collect::<Vec<_>>())
+    process_teams();
+    ()
 }
 
 
 fn make_pitcher() -> Pitcher {
-    let records = read_csv().unwrap();
+    let records = read_csv(Path::new("/home/ykanya/devel/tools/baseball/work/baseball_R/data/spahn.csv")).unwrap();
     Pitcher{
         record_array: records
             .iter()

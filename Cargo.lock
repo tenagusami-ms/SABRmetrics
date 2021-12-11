@@ -75,8 +75,8 @@ dependencies = [
     "bstr",
     "csv-core",
     "itoa",
- "ryu",
- "serde",
+    "ryu",
+    "serde",
 ]
 
 [[package]]

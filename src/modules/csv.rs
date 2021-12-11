@@ -9,3 +9,13 @@ pub fn read_csv(path: &Path) -> Result<Vec<StringRecord>, Box<dyn Error>> {
     let mut rdr = csv::Reader::from_reader(file);
     Ok(rdr.records().map(|r| r.unwrap()).collect::<Vec<_>>())
 }
+
+
+pub fn takeColumns(csvRecords: Vec<Vec<String>>, indices: Vec<usize>) -> Vec<Vec<String>> {
+    csvRecords.iter()
+        .map(|records|
+            indices.iter()
+                .map(|&index| records.get(index).unwrap().to_string())
+                .collect::<Vec<_>>())
+        .collect::<Vec<_>>()
+}
